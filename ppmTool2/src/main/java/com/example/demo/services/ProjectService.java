@@ -28,9 +28,9 @@ public class ProjectService {
 		
 	}
 	
-	public Project findProjectByIdenifier(String projectIdenifier) {
+	public Project findProjectByIdenifier(String projectIdentifier) {
 		
-		Project project = projectRepository.findByProjectIdentifier(projectIdenifier.toUpperCase());
+		Project project = projectRepository.findByProjectIdentifier(projectIdentifier.toUpperCase());
 		
 		if (project == null) {
 			throw new ProjectIdentifierException("Project does not exist");
@@ -46,6 +46,19 @@ public class ProjectService {
 		Iterable<Project> allProjects = projectRepository.findAll();
 		
 		return allProjects;
+	}
+	
+	
+	public void deleteProjectByIdentifier(String projectIdentifier) {
+		Project project = projectRepository.findByProjectIdentifier(projectIdentifier.toUpperCase());
+		
+		if (project == null) {
+			throw new ProjectIdentifierException("Cannot delete Project '" + projectIdentifier + "' as it does not exists");
+		}
+		
+		projectRepository.delete(project);
+		
+		
 	}
 	
 }
