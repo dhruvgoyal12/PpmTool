@@ -4,7 +4,7 @@ import Dashboard from './components/Dashboard';
 import Header from './components/Layout/Header';
 import "bootstrap/dist/css/bootstrap.min.css";
 import {BrowserRouter as Router, Route} from "react-router-dom";
-import addProject from './components/Project/addProject';
+import AddProject from './components/Project/AddProject';
 
 function App() {
   return (
@@ -13,7 +13,7 @@ function App() {
       <Header/>
      
       <Route exact path="/Dashboard" component={Dashboard}/>
-      <Route exact path="/addProject" component={addProject}/>
+      <Route exact path="/AddProject" component={AddProject}/>
     </div>
     </Router>
   );
