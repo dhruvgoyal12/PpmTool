@@ -31,6 +31,7 @@ public class ProjectTaskService {
         // update the BLSequence
         backlogSequence++;
 
+        backlog.setPTSequence(backlogSequence);
         // Add Sequence to Project task
         projectTask.setProjectSequence(projectIdentifier+ "-" +backlogSequence);
         projectTask.setProjectIdentifier(projectIdentifier);
