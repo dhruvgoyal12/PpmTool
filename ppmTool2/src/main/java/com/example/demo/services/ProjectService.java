@@ -1,9 +1,11 @@
 package com.example.demo.services;
 
+import com.example.demo.domain.Backlog;
+import com.example.demo.repositories.BacklogRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
-import com.example.demo.Project;
+import com.example.demo.domain.Project;
 import com.example.demo.exceptions.ProjectIdentifierException;
 import com.example.demo.repositories.ProjectRepository;
 
@@ -12,11 +14,23 @@ public class ProjectService {
 
 	@Autowired
 	private ProjectRepository projectRepository;
+
+	@Autowired
+	private BacklogRepository backlogRepository;
 	
 	public Project saveOrUpdateProject(Project project) {
-		
+		String projectIdentifier = project.getProjectIdentifier().toUpperCase();
 		try {
-			project.setProjectIdentifier(project.getProjectIdentifier().toUpperCase());
+			project.setProjectIdentifier(projectIdentifier);
+			if(project.getId() == null){
+				Backlog backlog = new Backlog();
+				project.setBacklog(backlog);
+				backlog.setProject(project);
+				backlog.setProjectIdentifier(projectIdentifier);
+			}
+			else{
+				project.setBacklog(backlogRepository.findByProjectIdentifier(projectIdentifier));
+			}
 			return projectRepository.save(project);
 			
 		}
