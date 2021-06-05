@@ -1,22 +1,14 @@
-package com.example.demo;
+package com.example.demo.domain;
 
 import java.util.Date;
 
-import javax.persistence.Column;
-import javax.persistence.Entity;
-import javax.persistence.GeneratedValue;
-import javax.persistence.GenerationType;
-import javax.persistence.Id;
-import javax.persistence.PrePersist;
-import javax.persistence.PreUpdate;
-import javax.persistence.Table;
+import javax.persistence.*;
 import javax.validation.constraints.NotBlank;
 import javax.validation.constraints.Size;
 
 import com.fasterxml.jackson.annotation.JsonFormat;
 
 @Entity
-@Table(name="Project")
 public class Project {
 	@Id
 	@GeneratedValue(strategy= GenerationType.IDENTITY)
@@ -54,7 +46,13 @@ public class Project {
 	@Column
 	@JsonFormat(pattern="yyyy-mm-dd")
 	private Date updatedAt;
-	
+
+	@OneToOne(fetch = FetchType.EAGER, cascade = CascadeType.ALL, mappedBy = "project")
+
+	private Backlog backlog;
+
+
+
 	@PrePersist
 	protected void onCreate() {
 		this.createdAt = new Date();
@@ -128,8 +126,16 @@ public class Project {
 	public void setUpdatedAt(Date updatedAt) {
 		this.updatedAt = updatedAt;
 	}
-	
-	Project(){}
+
+	public Backlog getBacklog() {
+		return backlog;
+	}
+
+	public void setBacklog(Backlog backlog) {
+		this.backlog = backlog;
+	}
+
+	public Project(){}
 	
 	
 	

@@ -5,17 +5,25 @@ import Header from './components/Layout/Header';
 import "bootstrap/dist/css/bootstrap.min.css";
 import {BrowserRouter as Router, Route} from "react-router-dom";
 import AddProject from './components/Project/AddProject';
+// Allows to hook up react and redux
+import {Provider} from "react-redux";
+import store from './store';
 
 function App() {
   return (
-    <Router>
-    <div className="App">
-      <Header/>
-     
-      <Route exact path="/Dashboard" component={Dashboard}/>
-      <Route exact path="/AddProject" component={AddProject}/>
-    </div>
-    </Router>
+    <Provider store={store}>
+      <Router>
+      <div className="App">
+        <Header/>
+      
+        <Route exact path="/Dashboard" component={Dashboard}/>
+        <Route exact path="/AddProject" component={AddProject}/>
+      </div>
+      </Router>
+    
+    
+    </Provider>
+    
   );
 }
 
